@@ -1,0 +1,31 @@
+@import "bootstrap/scss/functions";
+@import 'bootstrap/scss/variables';
+
+:host {
+  ::ng-deep{
+    .nav-link {
+      cursor: pointer;
+    }
+  }
+  .layout-container {
+    min-height: 100dvh;
+    .header {
+      height: 3rem;
+      z-index: $zindex-sticky;
+      background-color: $white;
+      border-bottom: 1px solid $gray-500;
+
+      letter-spacing: 0.2rem;
+    }
+
+    .content-container {
+      padding-top: 4rem;
+      padding-bottom: 1.8rem;
+      background-color: $white;
+      min-height: 100vh;
+      background-color: $gray-200;
+    }
+  }
+
+}
+

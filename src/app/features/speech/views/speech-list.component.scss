@@ -1,0 +1,127 @@
+
+@import "bootstrap/scss/functions";
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
+
+
+:host {
+  .folders-container {
+    // padding: 1rem;
+  }
+
+  .list-container {
+    min-height: calc(100vh - 12rem);
+    position: relative;
+    background-color: white;
+    padding: 1rem;
+    padding-top: 0.5rem;
+    border:1px solid $gray-500;
+    border-radius: 0.25rem;
+
+    .list-controls-container {
+      border-bottom: 1px solid $gray-500;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .speech-list-container {
+      // min-height: calc(100vh - 10rem);
+      max-height: calc(100vh - 12rem);
+      overflow-y: auto;
+    }
+  }
+
+
+  .list-favorites-label {
+    height: 3rem;
+    border-bottom: 1px solid $gray-500;
+    align-self: center;
+  }
+  .list-favorites {
+    min-height: 20rem;
+
+  }
+
+  .empty-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8rem;
+  }
+
+
+  .content-detail-container {
+    padding: 1.5rem 1rem;
+    min-height: calc(100vh - 12rem);
+
+    border: 1px solid $gray-500;
+    border-radius: 0.25rem;
+
+  }
+
+  .nav-pills {
+
+    .option {
+      color: $gray-700;
+      text-align: left;
+      padding-left: 1.5rem;
+       border-radius: 0.25rem;
+      &.active {
+        background-color: $white;
+        border: 1px solid $gray-500;
+      }
+    }
+  }
+
+  .nav-tabs {
+    border-color: $gray-500;
+    .option {
+      color: $gray-700;
+
+    }
+    .nav-link {
+      &.active {
+        border-color: $gray-500;
+        border-bottom: 1px solid $white;
+        &:focus {
+          border-bottom: 1px solid $white;
+        }
+      }
+    }
+  }
+
+  .form-check {
+    .form-check-input {
+      border: 1px solid $gray-500;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    .content-detail-container {
+      .content-detail {
+      }
+    }
+
+  }
+  @include media-breakpoint-down(lg){
+    .list-container{
+      border-top: 0;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+    .content-detail-container {
+      border-top: 0;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      .content-detail {
+        max-width: 100%;
+
+      }
+    }
+  }
+
+}

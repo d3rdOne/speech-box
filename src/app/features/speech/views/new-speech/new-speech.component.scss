@@ -1,0 +1,14 @@
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
+:host {
+  background-color: $gray-400;
+
+  @include media-breakpoint-down(sm){
+    .submit-btn,.discard-btn {
+
+      width: 100%
+    }
+  }
+}

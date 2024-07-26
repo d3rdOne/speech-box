@@ -1,0 +1,17 @@
+<div
+  class="toast align-items-center buttom-0 start-50 translate-middle-x position-fixed"
+  [ngClass]="{ 'd-block': toastService.open }"
+  role="alert"
+  aria-live="assertive"
+  aria-atomic="true"
+>
+  <div class="d-flex">
+    <div class="toast-body">Hello, world! This is a toast message.</div>
+    <button
+      type="button"
+      class="btn-close me-2 m-auto"
+      aria-label="Close"
+      (click)="toastService.closeToast()"
+    ></button>
+  </div>
+</div>

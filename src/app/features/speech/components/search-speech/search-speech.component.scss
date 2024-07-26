@@ -1,0 +1,25 @@
+@import "bootstrap/scss/functions";
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
+:host {
+  .input-group {
+
+    .input-group-text, .search-input, .form-select {
+      border-color: $gray-500;
+      // font-size: 1rem;
+    }
+    .search-input {
+      min-width: 20rem;
+    }
+  }
+
+
+  @include media-breakpoint-down(sm){
+    .input-group {
+      .search-input {
+        min-width: auto;
+      }
+    }
+  }
+}

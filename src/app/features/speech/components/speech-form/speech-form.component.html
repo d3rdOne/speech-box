@@ -1,0 +1,123 @@
+<div class="">
+  <form
+    [formGroup]="speechForm"
+    class="form-floating"
+    (ngSubmit)="formSubmit()"
+  >
+    <div class="row g-3 p-2">
+      <!-- <div class="col-12">
+        <h4 class="m-0">Speech Details</h4>
+      </div> -->
+
+      <div class="col-12">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control form-control-shadow h4"
+            formControlName="title"
+            id="speechTitle"
+            autocomplete="off"
+            placeholder="Speech Title"
+          />
+          <label
+            for="speechTitle"
+            *ngIf="mode == FormMode.NEW || mode == FormMode.EDIT"
+            >Title</label
+          >
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control form-control-shadow text-field"
+            formControlName="author"
+            id="speechAuthor"
+            autocomplete="off"
+            placeholder="Author"
+          />
+          <label for="speechAuthor" class="">Author</label>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-floating">
+          <input
+            type="text"
+            id="speechDate"
+            formControlName="date"
+            class="form-control form-control-shadow"
+            placeholder="Date"
+            autocomplete="off"
+            bsDatepicker
+            [bsConfig]="bsConfig"
+          />
+          <label for="speechDate">Date</label>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="form-floating">
+          <textarea
+            class="form-control form-control-shadow content"
+            formControlName="content"
+            id="speechContent"
+            placeholder="Content"
+            appTextAreaAutoResize
+          >
+          </textarea>
+          <label for="speechContent" class="">Content</label>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control form-control-shadow"
+            formControlName="keywords"
+            id="speechAuthor"
+            placeholder="Keywords (comma separated)"
+          />
+          <label for="speechAuthor" class="h6"
+            >Keywords
+            <span class="text-muted fw-lighter">(comma separated)</span></label
+          >
+        </div>
+      </div>
+
+      <div class="col-12 flex">
+        <div
+          class="flex-fill d-flex flex-column-reverse flex-sm-row gap-2 justify-content-stretch justify-content-sm-end"
+        >
+          <button
+            class="btn btn-outline-secondary discard-btn py-2"
+            type="button"
+            (click)="cancel.emit()"
+          >
+            <ng-container [ngSwitch]="mode">
+              <ng-container *ngSwitchCase="FormMode.NEW">Discard</ng-container>
+              <ng-container *ngSwitchCase="FormMode.EDIT">CANCEL</ng-container>
+            </ng-container>
+          </button>
+          <button
+            class="btn btn-primary submit-btn py-2"
+            type="submit"
+            [disabled]="!speechForm.valid"
+          >
+            <ng-container [ngSwitch]="mode">
+              <ng-container *ngSwitchCase="FormMode.NEW">
+                Submit<i class="bi bi-send-fill ms-2"></i>
+              </ng-container>
+              <ng-container *ngSwitchCase="FormMode.EDIT">
+                <i class="bi bi-floppy me-2"></i> <span>Save</span>
+              </ng-container>
+            </ng-container>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- {{ speechForm.valid }} -->

@@ -1,0 +1,28 @@
+@import "bootstrap/scss/functions";
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
+:host {
+  form {
+    .content {
+      min-height: 14rem;
+    }
+    .submit-btn {
+      min-width: 12rem;
+    }
+
+    .discard-btn {
+      min-width: 8rem;
+    }
+
+    .flat-border {
+      border-radius: 0;
+    }
+    @include media-breakpoint-down(sm){
+      .submit-btn,.discard-btn {
+
+        width: 100%
+      }
+    }
+  }
+}

@@ -1,0 +1,157 @@
+<div class="row justify-content-start">
+  <!-- Create  & Search Fields -->
+  <div class="col-md-3 col-lg-2 d-none d-lg-flex justify-content-start gap-2">
+    <ng-container *ngTemplateOutlet="createSpeech"></ng-container>
+  </div>
+  <div class="col d-flex gap-2">
+    <div class="d-lg-none">
+      <ng-container *ngTemplateOutlet="createSpeech"></ng-container>
+    </div>
+    <app-search-speech class="search-container"></app-search-speech>
+  </div>
+  <!-- End of Create  & Search Fields -->
+</div>
+
+<div class="row justify-content-start mt-4">
+  <!-- Folders -->
+  <div class="col-12 col-lg-2">
+    <div class="folders-container d-none d-lg-block">
+      <ul class="nav flex-column nav-pills">
+        <li class="nav-item">
+          <button
+            class="nav-link w-100 option"
+            (click)="
+              $event.stopPropagation(); folderCurrent.set(Folder.SPEECHES)
+            "
+            [ngClass]="{ active: folderCurrent() == Folder.SPEECHES }"
+          >
+            <i class="bi bi-newspaper me-2"></i> Speeches
+          </button>
+        </li>
+        <li class="nav-item">
+          <button
+            class="nav-link w-100 option"
+            (click)="
+              $event.stopPropagation(); folderCurrent.set(Folder.FAVORITES)
+            "
+            [ngClass]="{ active: folderCurrent() == Folder.FAVORITES }"
+          >
+            <i class="bi bi-star me-2"></i>Favorites
+          </button>
+        </li>
+        <li class="nav-item"></li>
+      </ul>
+    </div>
+
+    <div class="d-lg-none">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <button
+            (click)="
+              $event.stopPropagation(); folderCurrent.set(Folder.SPEECHES)
+            "
+            class="nav-link option"
+            [ngClass]="{ active: folderCurrent() == Folder.SPEECHES }"
+          >
+            <i class="bi bi-newspaper me-2"></i>Speeches
+          </button>
+        </li>
+        <li class="nav-item">
+          <button
+            (click)="
+              $event.stopPropagation(); folderCurrent.set(Folder.FAVORITES)
+            "
+            class="nav-link option"
+            [ngClass]="{ active: folderCurrent() == Folder.FAVORITES }"
+          >
+            <i class="bi bi-star me-2"></i>Favorites
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- End of Folders -->
+  <!-- Speech List -->
+  <div
+    class=""
+    [ngClass]="
+      childActive() ? 'd-none d-lg-block col-lg-4' : 'col-12 col-lg-10'
+    "
+  >
+    <div class="list-container">
+      <!-- List Controls -->
+      <div class="list-controls-container">
+        <div class="px-2">
+          <div class="form-check" *ngIf="(speeches$ | async)?.length != 0">
+            <input
+              class="form-check-input form-control-shadow"
+              type="checkbox"
+              (input)="$event.stopPropagation(); speechToggleAll($event)"
+              [indeterminate]="
+                (someSelected$ | async) && !(allSelected$ | async)
+              "
+              [checked]="!(someSelected$ | async) && (allSelected$ | async)"
+            />
+          </div>
+        </div>
+        <div class="btn-group" role="group">
+          <button
+            class="btn btn-default btn-border-0"
+            *ngIf="(speeches$ | async)?.length != 0"
+            (click)="multiDeleteSpeech()"
+            [disabled]="!(allSelected$ | async) && !(someSelected$ | async)"
+          >
+            <i class="bi bi-trash fs-6"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- End of List Controls -->
+
+      <ng-container *ngIf="(speeches$ | async)?.length == 0">
+        <div class="empty-list lead">No Speech Available</div>
+      </ng-container>
+      <div class="speech-list-container">
+        <ng-container *ngFor="let speech of speeches$ | async">
+          <app-list-item
+            [speech]="speech"
+            [active]="speech.id == childRouteId"
+            (selected)="speechSelected($event)"
+            (clicked)="listItemClicked($event)"
+            class="p-0"
+          ></app-list-item>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <!-- End of Speech List -->
+  <!-- Speech Details -->
+  <div class="col-12 col-lg-6" *ngIf="childActive()">
+    <div class="content-detail-container bg-white">
+      <div class="flex">
+        <button class="btn btn-default fw-bold" (click)="closePanel()">
+          <i class="bi bi-arrow-return-left fs-5"></i>
+        </button>
+      </div>
+      <div class="content-detail">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+  <!-- End of Details -->
+</div>
+
+<!-- Create Speech Button Template -->
+<ng-template #createSpeech>
+  <button
+    class="btn btn-primary w-auto text-truncate"
+    (click)="this.router.navigateByUrl('/speech/new')"
+  >
+    <i class="bi bi-plus-lg d-block d-sm-none"></i>
+
+    <span class="d-none d-sm-block">Create Speech</span>
+  </button>
+</ng-template>
+<!-- End of Create Speech Button Template -->
+
+<!-- <pre>{{ speeches$ | async | json }}</pre> -->

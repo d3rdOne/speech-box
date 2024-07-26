@@ -1,0 +1,42 @@
+<a
+  (click)="navigate(speech?.id)"
+  class="list-item-container d-flex justify-content-start align-items-start p-2 py-4 gap-3"
+  [ngClass]="{ active: active }"
+>
+  <div class="form-check">
+    <input
+      class="form-check-input form-control-shadow"
+      type="checkbox"
+      (change)="checkboxChanged($event)"
+      [checked]="speech.checked"
+      [value]="speech.id"
+      [id]="'checkbox' + speech.id"
+      (click)="$event.stopPropagation()"
+    />
+  </div>
+  <div>
+    <p class="author fw-bold">{{ speech.author }}</p>
+    <p class="title fw-bolder mb-0">
+      {{ (speech?.title | titlecase) || "" }}
+    </p>
+
+    <p class="content font-weight-light">
+      {{ speech?.content || "" }}
+    </p>
+  </div>
+
+  <div class="ms-auto flex-shrink-0">
+    <p class="date fw-light date mb-0 mt-2">
+      {{ speech.date | date : "shortDate" }}
+    </p>
+    <button
+      class="btn mt-3 fave-button"
+      (click)="$event.stopPropagation(); toggleFavorite(speech.id)"
+    >
+      <i
+        class="bi fs-5"
+        [ngClass]="speech.favorite ? 'bi-star-fill text-warning' : 'bi-star'"
+      ></i>
+    </button>
+  </div>
+</a>

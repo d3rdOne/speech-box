@@ -1,0 +1,22 @@
+<div class="input-group w-100 flex-nowrap">
+  <span class="input-group-text" id="basic-addon1"
+    ><i class="bi bi-search"></i
+  ></span>
+  <input
+    type="text"
+    class="form-control w-100 search-input form-control-shadow"
+    placeholder="Search"
+    (keyup)="onSearch(getValue($event))"
+  />
+
+  <select
+    name=""
+    class="form-select flex-grow-1 w-50 form-control-shadow"
+    id="category"
+    (change)="onSelectChange(getValue($event))"
+  >
+    <option [value]="SearchCategory.TITLE">Title</option>
+    <option [value]="SearchCategory.AUTHOR">Author</option>
+    <option [value]="SearchCategory.CONTENT">Content</option>
+  </select>
+</div>

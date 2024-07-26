@@ -1,0 +1,5 @@
+@import "bootstrap/scss/functions";
+@import 'bootstrap/scss/variables';
+:host {
+  z-index: $zindex-fixed;
+}
