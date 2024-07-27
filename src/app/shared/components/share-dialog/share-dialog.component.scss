@@ -1,17 +1,21 @@
+
 @import "bootstrap/scss/functions";
 @import 'bootstrap/scss/variables';
 
 .modal-body {
   padding: 1.5rem;
-  .button-container {
+
+    input {
+      border: 1px solid $gray-700;
+    }
     .btn {
       border-radius: 0.25rem;
       padding: 0.5rem 2rem;
 
-      &.approve-button {
+      &.send-button {
         border: 1px solid $gray-700;
       }
     }
-  }
+
 
 }

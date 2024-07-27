@@ -1,9 +1,17 @@
 <div class="modal-body text-center">
   <p>{{ message }}</p>
-  <button type="button" class="btn btn-default" (click)="decline()">
-    {{ declineLabel }}
-  </button>
-  <button type="button" class="btn btn-primary" (click)="approve()">
-    {{ approveLabel }}
-  </button>
+  <div
+    class="button-container w-100 d-flex justify-content-center align-items-center gap-4"
+  >
+    <button type="button" class="btn btn-default" (click)="decline()">
+      {{ declineLabel }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary approve-button"
+      (click)="approve()"
+    >
+      {{ approveLabel }}
+    </button>
+  </div>
 </div>

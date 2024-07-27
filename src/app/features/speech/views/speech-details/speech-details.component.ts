@@ -10,7 +10,8 @@ import { SpeechFormComponent } from '../../components/speech-form/speech-form.co
 
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { Subject, takeUntil } from 'rxjs';
+import { share, Subject, takeUntil } from 'rxjs';
+import { ShareDialogComponent } from '../../../../shared/components/share-dialog/share-dialog.component';
 
 @Component({
   selector: 'app-speech-details',
@@ -49,7 +50,7 @@ export class SpeechDetailsComponent implements OnInit{
       initialState: {
         message: `Are you sure, you want to delete, '${speech.title}'?`
       },
-      class: 'modal-sm',
+      class: 'delete-modal',
       ignoreBackdropClick: true
     })
     this.deleteDialogRef.onHidden?.pipe(takeUntil(unsubscribe$)).subscribe( () => {
@@ -58,6 +59,22 @@ export class SpeechDetailsComponent implements OnInit{
         this.store.dispatch(deleteSpeech({id: speech.id}))
         this.router.navigate(['/speech'])
       }
+      // TODO: Toast 'deleted'
+      unsubscribe$.next('');
+      unsubscribe$.complete();
+    })
+  }
+
+  shareSpeech(speech: Speech) {
+    let unsubscribe$ = new Subject();
+    let shareDialogRef = this.modalService.show(ShareDialogComponent, {
+      class: 'share-modal',
+      ignoreBackdropClick: true
+    })
+
+    shareDialogRef.onHidden?.pipe(takeUntil(unsubscribe$)).subscribe(() => {
+      let form = shareDialogRef.content?.shareForm.getRawValue();
+      // TODO: open toast 'sent to email'
       unsubscribe$.next('');
       unsubscribe$.complete();
     })

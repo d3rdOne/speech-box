@@ -1,0 +1,19 @@
+<div class="modal-body">
+  <div class="title fs-5">Share to:</div>
+  <form action="" [formGroup]="shareForm" (ngSubmit)="modalRef.hide()">
+    <div class="w-100 d-flex input-group">
+      <input
+        type="email"
+        class="form-control form-control-shadow"
+        formControlName="email"
+      />
+      <button
+        type="submit"
+        class="btn btn-primary send-button"
+        [disabled]="!shareForm.valid"
+      >
+        Send <i class="bi bi-send-fill"></i>
+      </button>
+    </div>
+  </form>
+</div>
