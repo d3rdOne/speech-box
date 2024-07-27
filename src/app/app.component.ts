@@ -7,12 +7,14 @@ import { Observable, of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LayoutComponent } from './core/layout/layout.component';
+import { ToastComponent } from './shared/components/toast/toast.component';
+import { ToastService } from './shared/components/toast/toast.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule ,LayoutComponent],
-  providers: [ HttpClient, SpeechService],
+  imports: [RouterOutlet, CommonModule ,LayoutComponent, ToastComponent],
+  providers: [ HttpClient, SpeechService, ToastService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

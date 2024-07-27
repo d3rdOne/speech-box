@@ -1,4 +1,4 @@
-import { Component, effect, OnDestroy, OnInit, signal, untracked } from '@angular/core';
+import { Component, effect, OnDestroy, OnInit, Signal, signal, untracked } from '@angular/core';
 import { delay, filter, map, mergeMap, Observable, of, Subject, switchMap, take, takeUntil, tap, } from 'rxjs';
 import { Speech } from '../../../core/models/speech';
 import { SpeechService } from '../services/speech.service';
@@ -13,7 +13,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogModal, Folder } from '../../../core/enums/enums';
 import { isEmpty, isNull } from 'lodash-es';
-
+import { ToastService } from '../../../shared/components/toast/toast.service';
 
 @Component({
   selector: 'app-speech-list',
@@ -33,16 +33,12 @@ export class SpeechListComponent implements OnInit, OnDestroy {
   childActive = signal(false);
   childRouteId: number = -1;
   unsubscribe$: Subject<boolean> = new Subject();
-
-
   folderCurrent = signal(Folder.SPEECHES);
 
-  constructor(public speechService: SpeechService
-    , public router: Router,  private route: ActivatedRoute, private store: Store, private modalService: BsModalService) {
-    this.childActive.set(this.route.firstChild? true: false);
+  constructor(public speechService: SpeechService, public router: Router,  private route: ActivatedRoute, private store: Store, private modalService: BsModalService, private toastService: ToastService) {
+    // Listen for Folder changes and update selector accordingly
     effect(() => {
       const folder= this.folderCurrent();
-
       untracked(() => {
         switch(folder) {
           case Folder.SPEECHES:
@@ -59,6 +55,15 @@ export class SpeechListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    // Set child active to true if child route is active
+    this.childActive.set(this.route.firstChild? true: false);
+
+    // Check if speech details is displayed and assign to childRouteId
+    // This is only triggered when page is refreshed or initially loaded with child route active
+    if(this.route?.firstChild?.params) {
+      this.route?.firstChild?.params.subscribe(({id}) => {this.childRouteId = id})
+    }
+
     // Listen to route for child routes being rendered and update signal value
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd || event instanceof Scroll),
@@ -67,6 +72,8 @@ export class SpeechListComponent implements OnInit, OnDestroy {
           of(this.route?.firstChild && this.route.firstChild.params ?true : false)
       ),
     ).subscribe(value => this.childActive.set(value));
+
+    // Fetch speech list from service
     this.fetchSpeechList();
   }
 
@@ -107,7 +114,7 @@ export class SpeechListComponent implements OnInit, OnDestroy {
       initialState: {
         message: 'Are your sure you want to delete?'
       },
-      class: "delete-modal"
+      class: "delete-modal modal-dialog-centered"
     })
 
     deleteModalRef.onHidden?.pipe(
@@ -119,14 +126,15 @@ export class SpeechListComponent implements OnInit, OnDestroy {
           }
         }
       ),
-      // Get id from active child route and speeches,
-      // returns null if NO active child route
       switchMap(() => this.getChildRouteIdAndSpeeches())
     ).subscribe((data) => {
+
       if(!isNull(data)) {
-        let {id, speeches} = data;
+
+        this.toastService.show('Success', 'Selected speech deleted!', 3000)
         // Checks if active child route is still active
         // Navigate to speech list if not (closing the details pane)
+        let {id, speeches} = data;
         if(isEmpty(speeches.find((speech) => speech.id == id))) {
           this.router.navigate(['/speech'])
         }
@@ -134,7 +142,8 @@ export class SpeechListComponent implements OnInit, OnDestroy {
     })
   }
 
-
+  // Get id from active child route id and speeches,
+  // returns null if NO active child route
   getChildRouteIdAndSpeeches() {
     let childRoute = this.route?.firstChild && this.route.firstChild.params;
     if(childRoute) {

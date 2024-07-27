@@ -1,17 +1,30 @@
-<div
-  class="toast align-items-center buttom-0 start-50 translate-middle-x position-fixed"
-  [ngClass]="{ 'd-block': toastService.open }"
-  role="alert"
-  aria-live="assertive"
-  aria-atomic="true"
->
-  <div class="d-flex">
-    <div class="toast-body">Hello, world! This is a toast message.</div>
-    <button
-      type="button"
-      class="btn-close me-2 m-auto"
-      aria-label="Close"
-      (click)="toastService.closeToast()"
-    ></button>
+<div aria-live="polite" aria-atomic="true" class="position-relative">
+  <div
+    class="toast-container position-fixed top-0 end-0 p-3"
+    style="z-index: 1200"
+  >
+    <ng-container *ngFor="let toast of toastService.toasts">
+      <div
+        #toastElem
+        class="toast"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        [attr.data-bs-delay]="toast.delay"
+      >
+        <div class="toast-header">
+          <strong class="me-auto">{{ toast.header }}</strong>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="toastService.remove(toast)"
+          ></button>
+        </div>
+        <div class="toast-body">
+          {{ toast.body }}
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>

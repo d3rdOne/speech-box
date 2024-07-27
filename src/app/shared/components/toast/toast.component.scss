@@ -1,5 +1,19 @@
 @import "bootstrap/scss/functions";
 @import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
 :host {
-  z-index: $zindex-fixed;
+  .toast {
+    border: 1px solid $gray-500;
+    border-radius: 0;
+    .toast-header {
+      background-color: $white;
+      color: $gray-700;
+      border:0;
+    }
+
+    .toast-body {
+      background-color: $gray-100;
+    }
+  }
 }

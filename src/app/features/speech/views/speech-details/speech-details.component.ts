@@ -12,6 +12,7 @@ import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { share, Subject, takeUntil } from 'rxjs';
 import { ShareDialogComponent } from '../../../../shared/components/share-dialog/share-dialog.component';
+import { ToastService } from '../../../../shared/components/toast/toast.service';
 
 @Component({
   selector: 'app-speech-details',
@@ -29,7 +30,7 @@ export class SpeechDetailsComponent implements OnInit{
   speech$ = this.store.select(getSpeech(this.speechId));
   mode: FormMode = FormMode.VIEW
 
-  constructor(private activatedRoute: ActivatedRoute, private store : Store, private router: Router, private modalService: BsModalService) {}
+  constructor(private activatedRoute: ActivatedRoute, private store : Store, private router: Router, private modalService: BsModalService, private toastService: ToastService) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({speechId}) => {
@@ -50,7 +51,7 @@ export class SpeechDetailsComponent implements OnInit{
       initialState: {
         message: `Are you sure, you want to delete, '${speech.title}'?`
       },
-      class: 'delete-modal',
+      class: 'delete-modal modal-dialog-centered',
       ignoreBackdropClick: true
     })
     this.deleteDialogRef.onHidden?.pipe(takeUntil(unsubscribe$)).subscribe( () => {
@@ -60,6 +61,7 @@ export class SpeechDetailsComponent implements OnInit{
         this.router.navigate(['/speech'])
       }
       // TODO: Toast 'deleted'
+      this.toastService.show('Success', 'Speech deleted!', 3000)
       unsubscribe$.next('');
       unsubscribe$.complete();
     })
@@ -68,13 +70,15 @@ export class SpeechDetailsComponent implements OnInit{
   shareSpeech(speech: Speech) {
     let unsubscribe$ = new Subject();
     let shareDialogRef = this.modalService.show(ShareDialogComponent, {
-      class: 'share-modal',
+      class: 'share-modal modal-dialog-centered',
       ignoreBackdropClick: true
     })
 
     shareDialogRef.onHidden?.pipe(takeUntil(unsubscribe$)).subscribe(() => {
       let form = shareDialogRef.content?.shareForm.getRawValue();
-      // TODO: open toast 'sent to email'
+      if(form && form?.email) {
+        this.toastService.show('Success', `Shared to ${form?.email}`, 3000)
+      }
       unsubscribe$.next('');
       unsubscribe$.complete();
     })
@@ -82,12 +86,12 @@ export class SpeechDetailsComponent implements OnInit{
 
   saveSpeech(speech: Speech) {
     speech = {...speech, id: this.speechId};
+    this.toastService.show('Success', 'Speech updated!', 3000)
     this.store.dispatch(updateSpeech({speech}));
     this.mode = FormMode.VIEW;
   }
 
   cancelSave() {
-
     this.mode = FormMode.VIEW;
   }
 

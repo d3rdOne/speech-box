@@ -24,7 +24,8 @@ export class NewSpeechComponent  implements OnInit{
 
   formSubmitted(speech: Speech) {
     this.speechService.addSpeech(speech).subscribe(speech => {
-      this.store.dispatch(addSpeech({speech}))
+      this.store.dispatch(addSpeech({speech}));
+      this.toastService.show('Success' , 'Speech created!', 3000)
       this.router.navigateByUrl('/speech')
     })
   }

@@ -9,25 +9,13 @@ export interface Toast {
   providedIn: 'root'
 })
 export class ToastService {
+  toasts: any[] = [];
 
-  toasts: Toast[] = [];
-  open: boolean = false;
-  constructor() { }
-
-
-  show(toast:Toast) {
-    this.toasts.push(toast)
+  show(header: string, body: string, delay: number = 5000) {
+    this.toasts.push({ header, body, delay });
   }
 
-  remove(toast: Toast) {
-    this.toasts = this.toasts.filter((t) => !isEqual(t, toast))
-  }
-  openToast() {
-    this.open = true;
-
-  }
-
-  closeToast() {
-    this.open = false;
+  remove(toast: any) {
+    this.toasts = this.toasts.filter(t => t !== toast);
   }
 }
