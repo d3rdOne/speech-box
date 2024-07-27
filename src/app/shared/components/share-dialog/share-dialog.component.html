@@ -1,12 +1,13 @@
 <div class="modal-body">
-  <div class="title fs-5">Share to:</div>
-  <form action="" [formGroup]="shareForm" (ngSubmit)="modalRef.hide()">
+  <button
+    type="button"
+    class="btn-close fs-6"
+    (click)="modalRef.hide()"
+  ></button>
+  <div class="title fs-5 mt-2">Share to:</div>
+  <form class="mb-2" [formGroup]="shareForm" (ngSubmit)="modalRef.hide()">
     <div class="w-100 d-flex input-group">
-      <input
-        type="email"
-        class="form-control form-control-shadow"
-        formControlName="email"
-      />
+      <input type="email" class="form-control" formControlName="email" />
       <button
         type="submit"
         class="btn btn-primary send-button"

@@ -5,17 +5,23 @@
 .modal-body {
   padding: 1.5rem;
 
-    input {
+  input {
+    border: 1px solid $gray-700;
+  }
+  .btn {
+    border-radius: 0.25rem;
+    padding: 0.5rem 2rem;
+
+    &.send-button {
       border: 1px solid $gray-700;
     }
-    .btn {
-      border-radius: 0.25rem;
-      padding: 0.5rem 2rem;
-
-      &.send-button {
-        border: 1px solid $gray-700;
-      }
-    }
-
-
+  }
+  .form-control {
+    box-shadow: none;
+  }
+  .btn-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem
+  }
 }

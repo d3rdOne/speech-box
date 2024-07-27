@@ -10,8 +10,6 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   styleUrl: './share-dialog.component.scss'
 })
 export class ShareDialogComponent {
-
-
   constructor(public modalRef: BsModalRef, private formBuilder: FormBuilder){}
 
   shareForm = this.formBuilder.group({
