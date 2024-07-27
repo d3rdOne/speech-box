@@ -107,7 +107,7 @@ export class SpeechListComponent implements OnInit, OnDestroy {
       initialState: {
         message: 'Are your sure you want to delete?'
       },
-      class: "modal-sm"
+      class: "delete-modal"
     })
 
     deleteModalRef.onHidden?.pipe(
