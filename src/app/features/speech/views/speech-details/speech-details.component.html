@@ -8,24 +8,24 @@
         <div class="">
           <div class="btn-group">
             <button class="btn p-1 p-lg-2" (click)="mode = FormMode.EDIT">
-              <i class="bi bi-pencil-square"></i>
+              <i class="bi bi-pencil-square fs-5"></i>
             </button>
             <button class="btn p-1 p-lg-2" (click)="deleteSpeech(speech)">
-              <i class="bi bi-trash"></i>
+              <i class="bi bi-trash fs-5"></i>
             </button>
             <button
               class="btn p-1 p-lg-2"
               (click)="toggleFavoriteSpeech(speech)"
             >
               <i
-                class="bi"
+                class="bi fs-5"
                 [ngClass]="
                   speech.favorite ? 'bi-star-fill text-warning' : 'bi-star'
                 "
               ></i>
             </button>
-            <button class="btn p-1 p-lg-2">
-              <i class="bi bi-share"></i>
+            <button class="btn p-1 p-lg-2" (click)="shareSpeech(speech)">
+              <i class="bi bi-share fs-5"></i>
             </button>
           </div>
         </div>
