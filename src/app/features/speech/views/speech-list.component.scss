@@ -6,10 +6,6 @@
 
 
 :host {
-  .folders-container {
-    // padding: 1rem;
-  }
-
   .list-container {
     min-height: calc(100vh - 12rem);
     position: relative;
@@ -28,7 +24,6 @@
     }
 
     .speech-list-container {
-      // min-height: calc(100vh - 10rem);
       max-height: calc(100vh - 12rem);
       overflow-y: auto;
     }
@@ -100,13 +95,6 @@
     }
   }
 
-  @include media-breakpoint-up(lg) {
-    .content-detail-container {
-      .content-detail {
-      }
-    }
-
-  }
   @include media-breakpoint-down(lg){
     .list-container{
       border-top: 0;
