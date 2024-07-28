@@ -122,7 +122,8 @@ export class SpeechListComponent implements OnInit, OnDestroy {
       tap(() => {
           // Delete speech from speech list
           if(deleteModalRef.content.response === ConfirmDialogModal.APPROVE) {
-            this.store.dispatch(deleteMultipleSpeech())
+            this.store.dispatch(deleteMultipleSpeech());
+            this.toastService.show('Success', 'Selected speech deleted!', 3000);
           }
         }
       ),
@@ -130,8 +131,6 @@ export class SpeechListComponent implements OnInit, OnDestroy {
     ).subscribe((data) => {
 
       if(!isNull(data)) {
-
-        this.toastService.show('Success', 'Selected speech deleted!', 3000)
         // Checks if active child route is still active
         // Navigate to speech list if not (closing the details pane)
         let {id, speeches} = data;
@@ -139,6 +138,7 @@ export class SpeechListComponent implements OnInit, OnDestroy {
           this.router.navigate(['/speech'])
         }
       }
+
     })
   }
 
@@ -161,7 +161,6 @@ export class SpeechListComponent implements OnInit, OnDestroy {
     }
     return of(null);
   }
-
 
   get Folder() {
     return Folder;

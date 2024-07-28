@@ -58,10 +58,10 @@ export class SpeechDetailsComponent implements OnInit{
 
       if(this.deleteDialogRef?.content.response === ConfirmDialogModal.APPROVE) {
         this.store.dispatch(deleteSpeech({id: speech.id}))
+        this.toastService.show('Success', 'Speech deleted!', 3000)
         this.router.navigate(['/speech'])
       }
-      // TODO: Toast 'deleted'
-      this.toastService.show('Success', 'Speech deleted!', 3000)
+
       unsubscribe$.next('');
       unsubscribe$.complete();
     })
@@ -77,7 +77,7 @@ export class SpeechDetailsComponent implements OnInit{
     shareDialogRef.onHidden?.pipe(takeUntil(unsubscribe$)).subscribe(() => {
       let form = shareDialogRef.content?.shareForm.getRawValue();
       if(form && form?.email) {
-        this.toastService.show('Success', `Shared to ${form?.email}`, 3000)
+        this.toastService.show('Success', `Shared to ${form?.email}`, 5000)
       }
       unsubscribe$.next('');
       unsubscribe$.complete();
