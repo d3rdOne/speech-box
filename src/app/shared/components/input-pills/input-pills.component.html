@@ -1,0 +1,28 @@
+<div class="form-floating">
+  <div
+    class="form-control input-pills-container"
+    [ngClass]="{ focused: focused }"
+  >
+    <ng-container *ngFor="let pill of pills">
+      <span class="badge badge-pill badge-primary pill">
+        {{ pill }}
+        <button
+          type="button"
+          class="btn-close btn-default"
+          aria-label="Close"
+          (click)="removePill(pill)"
+        ></button>
+      </span>
+    </ng-container>
+    <input
+      type="text"
+      class="input-pills"
+      (keyup.enter)="addPill($event)"
+      placeholder=""
+      (focus)="focused = true"
+      (focusout)="focused = false"
+      #Input
+    />
+  </div>
+  <label for="input-pills" class="input-label">{{ label }}</label>
+</div>
