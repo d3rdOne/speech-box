@@ -22,6 +22,7 @@
           <label
             for="speechTitle"
             *ngIf="mode == FormMode.NEW || mode == FormMode.EDIT"
+            class="input-label"
             >Title</label
           >
         </div>
@@ -37,7 +38,7 @@
             autocomplete="off"
             placeholder="Author"
           />
-          <label for="speechAuthor" class="">Author</label>
+          <label for="speechAuthor" class="input-label">Author</label>
         </div>
       </div>
       <div class="col-sm-6">
@@ -52,7 +53,7 @@
             bsDatepicker
             [bsConfig]="bsConfig"
           />
-          <label for="speechDate">Date</label>
+          <label for="speechDate" class="input-label">Date</label>
         </div>
       </div>
 
@@ -66,24 +67,15 @@
             appTextAreaAutoResize
           >
           </textarea>
-          <label for="speechContent" class="">Content</label>
+          <label for="speechContent" class="input-label">Content</label>
         </div>
       </div>
 
       <div class="col-12">
-        <div class="form-floating">
-          <input
-            type="text"
-            class="form-control form-control-shadow"
-            formControlName="keywords"
-            id="speechAuthor"
-            placeholder="Keywords (comma separated)"
-          />
-          <label for="speechAuthor" class="h6"
-            >Keywords
-            <span class="text-muted fw-lighter">(comma separated)</span></label
-          >
-        </div>
+        <app-input-pills
+          label="Keywords (press enter after typing)"
+          formControlName="keywords"
+        ></app-input-pills>
       </div>
 
       <div class="col-12 flex">
@@ -119,5 +111,3 @@
     </div>
   </form>
 </div>
-
-<!-- {{ speechForm.valid }} -->

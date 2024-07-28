@@ -6,13 +6,13 @@ import { BsDatepickerConfig, BsDatepickerDirective, BsDatepickerModule } from 'n
 import { FormMode } from '../../../../core/enums/enums';
 import { CommonModule } from '@angular/common';
 import { Speech } from '../../../../core/models/speech';
-import { BrowserModule } from '@angular/platform-browser';
 import { TextAreaAutoResizeDirective } from '../../../../shared/directives/text-area-auto-resize.directive';
+import { InputPillsComponent } from "../../../../shared/components/input-pills/input-pills.component";
 
 @Component({
   selector: 'app-speech-form',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, BsDatepickerModule, TextAreaAutoResizeDirective],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, BsDatepickerModule, TextAreaAutoResizeDirective, InputPillsComponent],
   templateUrl: './speech-form.component.html',
   styleUrl: './speech-form.component.scss'
 })
@@ -27,11 +27,11 @@ export class SpeechFormComponent {
   @Output() cancel = new EventEmitter();
 
   bsConfig?: Partial<BsDatepickerConfig>;
-  speechForm: FormGroup = this.formBuilder.group({
+  speechForm: FormGroup=  this.formBuilder.group({
     title: ['', [Validators.required, Validators.minLength(10)]],
-    content:['', [Validators.required, Validators.minLength(50)]],
+    content:['', [Validators.required, Validators.minLength(10)]],
     author: ['',[Validators.required]],
-    keywords: ['', [Validators.required]],
+    keywords: [[],[Validators.required]],
     date: ['', [Validators.required]]
   });
 
@@ -52,13 +52,11 @@ export class SpeechFormComponent {
     this.speechForm.controls['content'].setValue(speech.content);
     this.speechForm.controls['author'].setValue(speech.author);
     this.speechForm.controls['date'].setValue(new Date(speech.date));
-    this.speechForm.controls['keywords'].setValue(speech.keywords.join(","));
+    this.speechForm.controls['keywords'].setValue(speech.keywords);
   }
 
   formSubmit() {
-    const speech = this.speechForm.getRawValue()
-    speech.keywords = speech.keywords.split(',').map((keyword: string) => keyword.trim());
-    console.log(speech)
+    const speech = this.speechForm.getRawValue();
     this.formSubmitted.emit(speech)
   }
 
